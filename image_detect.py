@@ -13,10 +13,7 @@ emotion_detector = FER(mtcnn=True)
 def detect_emotions(image_path: str):
     image = open_image_cv(image_path)
     emotions = emotion_detector.detect_emotions(image)
-    print(emotions)
     top_emotion, top_emotion_score = emotion_detector.top_emotion(image)
-    print(top_emotion, top_emotion_score)
-    # bounding_box = emotions[0]["box"]
     for i in emotions:
         bounding_box = i["box"]
         cv2.rectangle(image,
@@ -25,10 +22,11 @@ def detect_emotions(image_path: str):
                       (36, 255, 12), 2, )
         cv2.putText(image, max(i['emotions'], key=i['emotions'].get), (bounding_box[0], bounding_box[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (36, 255, 12), 2)
 
-    cv2.imshow('with emotions', image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    return emotions
+    cv2.imwrite(image_path, image)
+    result_dict = {
+        'top_emotion': top_emotion,
+        'top_emotion_score': top_emotion_score,
+        'all_emotions': emotions
+    }
+    return result_dict
 
-
-detect_emotions('test_static/test_group3.png')
