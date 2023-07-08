@@ -11,7 +11,7 @@ If you don't have Python 3.11 installed, you can download and install it from th
 You can verify your Python version by opening a terminal or command prompt and running the following command:
 ```shell
 python3 --version
-
+```
 ## Installation
 
 1. Clone the repository:
