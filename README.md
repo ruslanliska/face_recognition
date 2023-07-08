@@ -1,6 +1,17 @@
 # Emotion Recognition
 
 This project is an emotion recognition application that analyzes images containing faces and detects the emotions expressed by the individuals in those images. It utilizes machine learning techniques and computer vision algorithms to identify and classify emotions.
+
+## Prerequisites 
+Before running the app, ensure that you have the following prerequisite:
+
+Python 3.11: The app requires Python 3.11 or a compatible version to run properly. Make sure you have Python 3.11 installed on your system.
+If you don't have Python 3.11 installed, you can download and install it from the official Python website (https://www.python.org). Follow the installation instructions specific to your operating system.
+
+You can verify your Python version by opening a terminal or command prompt and running the following command:
+```shell
+python3 --version
+
 ## Installation
 
 1. Clone the repository:
