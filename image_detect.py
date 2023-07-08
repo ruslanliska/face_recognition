@@ -83,6 +83,10 @@ def detect_specific_emotion(image_path: str, emotion: str) -> dict[str, str | li
             If multiple emotions are detected:
                 - 'message' (str): A message indicating that multiple emotions were found in the image. The user is
                     instructed to upload an image with only one face.
+                - 'found_emotions' (list[dict[str, list | dict]]): A list of dictionaries containing information
+                    about each detected emotion. Each dictionary contains the following keys:
+                    - 'box' (list): The bounding box coordinates of the detected face.
+                    - 'emotions' (dict): A dictionary of emotions and their corresponding scores.
 
     """
     emotions = detect_emotions(image_path)
@@ -95,7 +99,8 @@ def detect_specific_emotion(image_path: str, emotion: str) -> dict[str, str | li
         return {'message': 'No emotions found on image!'}
 
     if len(emotions.get('all_emotions')) > 1:
-        return {'message': 'Multiple emotions found on image. Please, upload only one face.'}
+        return {'message': 'Multiple emotions found on image. Please, upload only one face.',
+                'found_emotion': emotions}
 
     all_emotions = emotions.get('all_emotions')
 

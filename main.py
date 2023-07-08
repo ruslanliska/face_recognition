@@ -5,6 +5,8 @@ from fastapi import FastAPI, File, UploadFile
 from const import STATIC_IMAGES_PATH
 from image_detect import (detect_emotions,
                           detect_specific_emotion)
+from detection_utils.utils import create_folder
+
 
 app = FastAPI(title='Emotion detection',
               description='App for emotion detection on the face',
@@ -41,8 +43,13 @@ async def image_detect_emotions(file: UploadFile = File(...)) -> dict[str, str |
     file.filename = f"{uuid.uuid4()}.png"
     file_dir = f'{STATIC_IMAGES_PATH}{file.filename}'
 
-    with open(file_dir, 'wb') as f:
-        f.write(contents)
+    try:
+        with open(file_dir, 'wb') as f:
+            f.write(contents)
+    except FileNotFoundError:
+        create_folder(STATIC_IMAGES_PATH)
+        with open(file_dir, 'wb') as f:
+            f.write(contents)
 
     emotions = detect_emotions(file_dir)
     if emotions:
@@ -81,7 +88,12 @@ async def image_detect_specific_emotion(emotion: str, file: UploadFile = File(..
     file.filename = f"{uuid.uuid4()}.png"
     file_dir = f'{STATIC_IMAGES_PATH}{file.filename}'
 
-    with open(file_dir, 'wb') as f:
-        f.write(contents)
+    try:
+        with open(file_dir, 'wb') as f:
+            f.write(contents)
+    except FileNotFoundError:
+        create_folder(STATIC_IMAGES_PATH)
+        with open(file_dir, 'wb') as f:
+            f.write(contents)
     return detect_specific_emotion(image_path=file_dir,
                                    emotion=emotion)
